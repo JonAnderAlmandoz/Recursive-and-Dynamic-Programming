@@ -1,27 +1,46 @@
-# The core of this task involves devising an algorithm, named B_Pal, that identifies the largest palindrome
-# within a sequence of integers. A palindrome, in this context, is a sequence that reads the same forwards as backwards.
-# Functionality
-#
-# When applied to an array of integers, B_Pal searches for the longest contiguous sub-array that forms a palindrome.
-# For example:
-#
-#     Given V = [2, 4, 2], B_Pal(V) returns [2, 4, 2], as the entire array is a palindrome.
-#     For V = [1, 2, 2], B_Pal(V) yields [2, 2], which is the largest palindromic sub-array.
-#     In the case of V = [4, 2, 1, 2, 7], B_Pal(V) finds [2, 1, 2] as the largest palindrome.
-#
-# Broader Application
-#
-# While the current focus is on sequences of integers, the underlying principles of B_Pal are adaptable
-# to a wide range of contexts, such as character strings or even more complex structures.
-# The choice to use simple integer lists as the initial problem set is deliberate;
-# it simplifies the conceptual foundation, allowing us to concentrate on crafting a robust and efficient algorithm.
-# Emphasis on Algorithm Development
-#
-# The essence of this endeavor is not the specific data type or structure being analyzed
-# but the development of a versatile algorithm capable of palindrome detection under various conditions.
-# The challenge lies in the algorithm's creation—ensuring it is intelligent, efficient, and adaptable.
-# Once achieved, extending the algorithm to other domains or data types becomes a relatively straightforward task.
-# Therefore, the primary investment of effort and innovation is directed towards the algorithm's core design,
-# rather than the breadth of its application.
+# In order to create a recursive function to resolve this problem, we first need to declare the answers for the simplest cases:
+# c1: v = [] -> b_pal(v) = [] = v
+# c2: v = [x] -> b_pal(v) = [x] = v
+# c3: v = [x, y] -> if x == y b_pal(v) = [x,y]
+#                -> if x != y b_pal(v) = [x] | [y]
+# c4: v = [x, y, z] -> if x == z b_pal(v) = [x, z]
+#                   -> if x != z b_pal(v) = x_pal([x, y]) | x_pal([y, z])
 
+# We can observe that the first two cases are straightforward, and that it does not matter what the value of x is,
+# the answer will always be v.
+# But, when we increase the number of elements in the list, it gets more complicated.
+# The logic behind my algorithm lies in considering that when we have two elements or more, we need to verify that the
+# first and last elements are equal, in case they are and the vector inside also is a palindrome,
+# v itself is palindrome.
+# But, if the palindrome of the v[1:-1] is not of the length of v[1,-1],
+# even though v[0] == v[-1], the biggest palindrome is the palindrome of the inside list.
+# In case v[0] != v[-1], the biggest palindrome will be inside v[1:] or v[:-1].
+#
+# We can observe that, this recursive function is not the best, as we need to execute the function
+# once or twice, making the cost double.
+
+
+# Recursive function to find the biggest palindrome
+def b_pal(v):
+    if len(v) == 0 or len(v) == 1:
+        return v
+    elif v[0] == v[-1]:
+        result = b_pal(v[1:-1])
+        if len(result) == len(v[1:-1]):
+            return v
+        else:
+            return result
+    else:
+        result_1 = b_pal(v[1:])
+        result_2 = b_pal(v[:-1])
+        if len(result_1) >= len(result_2):
+            return result_1
+        else:
+            return result_2
+
+
+
+
+def dyn_b_pal(v):
+    return v
 
