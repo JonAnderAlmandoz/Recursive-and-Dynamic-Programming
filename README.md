@@ -2,17 +2,17 @@
 
 Welcome to the Advanced Recursion and Dynamic Programming Practice repository! This project is tailored for individuals with a foundational understanding of recursion and dynamic programming, looking to delve deeper into these concepts. The repository is designed not just to practice but to specialize in these critical areas of computer science, presenting complex problems and innovative solutions.
 
-# About
+## About
 
 This repository is a curated collection of challenging problems aimed at pushing the boundaries of your understanding in recursion and dynamic programming. It goes beyond basic principles, exploring nuanced scenarios, optimization techniques, and advanced applications of these concepts in algorithm design.
 
-# Learning Objectives
+## Learning Objectives
 
   - Enhance problem-solving skills in recursion and dynamic programming by tackling complex and diverse challenges.
   - Explore advanced techniques and optimizations in dynamic programming to solve problems more efficiently.
   - Understand the intricate scenarios where recursion and dynamic programming intersect and how to navigate them effectively.
 
-# Contents
+## Contents
 
 The repository is structured into advanced sections, each dedicated to deepening your expertise:
 
