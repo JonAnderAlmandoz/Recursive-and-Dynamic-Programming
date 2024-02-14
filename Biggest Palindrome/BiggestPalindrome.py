@@ -19,18 +19,18 @@
 # We can observe that, this recursive function is not the best, as we need to execute the function
 # once or twice, making the cost double.
 
+from random import randint
+
 
 # Recursive function to find the biggest palindrome
 def b_pal(v):
     if len(v) == 0 or len(v) == 1:
         return v
-    elif v[0] == v[-1]:
-        result = b_pal(v[1:-1])
-        if len(result) == len(v[1:-1]):
-            return v
-        else:
-            return result
     else:
+        if v[0] == v[-1]:
+            result = b_pal(v[1:-1])
+            if len(result) == len(v[1:-1]):
+                return v
         result_1 = b_pal(v[1:])
         result_2 = b_pal(v[:-1])
         if len(result_1) >= len(result_2):
@@ -39,8 +39,14 @@ def b_pal(v):
             return result_2
 
 
-
-
 def dyn_b_pal(v):
     return v
+
+
+for i in range(10):
+    list_ = []
+    n = randint(0, 30)
+    for j in range(n):
+        list_.append(randint(0, 10))
+    print("List: ", list_, ". Biggest pal.:", b_pal(list_))
 
