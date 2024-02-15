@@ -20,33 +20,103 @@
 # once or twice, making the cost double.
 
 from random import randint
+import time
+import sys
+import numpy as np
+import concurrent.futures
+import numpy as np
 
 
 # Recursive function to find the biggest palindrome
-def b_pal(v):
+def r_b_pal(v):
     if len(v) == 0 or len(v) == 1:
         return v
     else:
         if v[0] == v[-1]:
-            result = b_pal(v[1:-1])
+            result = r_b_pal(v[1:-1])
             if len(result) == len(v[1:-1]):
                 return v
-        result_1 = b_pal(v[1:])
-        result_2 = b_pal(v[:-1])
+        result_1 = r_b_pal(v[1:])
+        result_2 = r_b_pal(v[:-1])
         if len(result_1) >= len(result_2):
             return result_1
         else:
             return result_2
 
 
+# This function finds the biggest palindrome iteratively, starting with the biggest one possible.
+# When a palindrome is found, the function finishes the execution,
+# as the next found palindrome will never be bigger than the previous.
+def i_b_pal(v):
+    if len(v) == 0 or len(v) == 1:
+        return v
+    else:
+        j = 0
+        i = len(v)
+        curr_b_pal = [v[0]]
+        while i >= 1:
+            for j in range(0, len(v)):
+                if j+i > len(v):
+                    break
+                if is_pal(v[j:j+i]):
+                    if len(v[j:j+i]) > len(curr_b_pal):
+                        return v[j:j+i]
+                    j += 1
+                else:
+                    j += i
+            i -= 1
+    return curr_b_pal
+
+
+# This function finds the biggest palindrome using dynamic programming.
 def dyn_b_pal(v):
     return v
 
 
-for i in range(10):
-    list_ = []
-    n = randint(0, 30)
-    for j in range(n):
-        list_.append(randint(0, 10))
-    print("List: ", list_, ". Biggest pal.:", b_pal(list_))
+# This function is used by the iterative function to know whether a list is a palindrome.
+def is_pal(v):
+    length = len(v)
+    if length == 0 or length == 1:
+        return True
+    else:
+        left_i = 0
+        right_j = length-1
+        while v[left_i] == v[right_j] and left_i < right_j:
+            left_i += 1
+            right_j -= 1
+        if left_i >= right_j:
+            return True
+        else:
+            return False
 
+
+# This function permits compare the execution times of the created methods.
+# We can add infinite number of methods in this python file, but they must be called method_x.
+def comp_method_times():
+    avg_recursive = 0
+    avg_iterative = 0
+
+    for i in range(10):
+        list_ = []
+        for j in range(25):
+            list_.append(randint(0, 10))
+
+        start = time.time()
+        v = r_b_pal(list_)
+        end = time.time()
+
+        print("Recursive exec time: ", end-start, "V_in: ", list_, "  V_out: ", v)
+        avg_recursive += end-start
+
+        start = time.time()
+        v = i_b_pal(list_)
+        end = time.time()
+
+        print("Iterative exec time: ", end - start, "V_in: ", list_, "  V_out: ", v)
+        avg_iterative += end - start
+
+    print("Recursive avg exec time: ", avg_recursive/10)
+    print("Iterative avg exec time: ", avg_iterative/10)
+
+
+comp_method_times()
