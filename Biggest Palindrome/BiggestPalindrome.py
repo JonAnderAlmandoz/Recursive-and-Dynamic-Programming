@@ -21,9 +21,6 @@
 
 from random import randint
 import time
-import sys
-import numpy as np
-import concurrent.futures
 import numpy as np
 
 
@@ -70,7 +67,29 @@ def i_b_pal(v):
 
 # This function finds the biggest palindrome using dynamic programming.
 def dyn_b_pal(v):
-    return v
+    matr = np.identity(len(v))
+    for i in range(0, len(matr)-1):
+        for j in range(i+1, len(v)):
+            if v[i] == v[j]:
+                matr[i][j] = 1
+
+    i_top = 0
+    j_top = len(v)-1
+
+    j_top_init = len(v) - 1
+
+
+def dig_exists(matr, i, j):
+    while j > i:
+        if matr[i][j]:
+            i += 1
+            j -= 1
+        else:
+            return False
+    return True
+
+
+
 
 
 # This function is used by the iterative function to know whether a list is a palindrome.
@@ -98,7 +117,7 @@ def comp_method_times():
 
     for i in range(10):
         list_ = []
-        for j in range(25):
+        for j in range(23):
             list_.append(randint(0, 10))
 
         start = time.time()
@@ -119,4 +138,6 @@ def comp_method_times():
     print("Iterative avg exec time: ", avg_iterative/10)
 
 
-comp_method_times()
+#comp_method_times()
+print(dyn_b_pal([0,1,2,3,2,3]))
+print(dyn_b_pal([1,2,3,2,3,2,5,6,5,7,8,7,6,5,4,5,6,5,4,3,2,3,4,3,2,3,4,5,4]))
